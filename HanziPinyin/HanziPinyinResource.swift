@@ -46,11 +46,12 @@ internal extension HanziPinyin {
 
 internal extension HanziPinyin {
     fileprivate static var pinYinCachePath: String? {
-        guard let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else {
+        guard let appHomePath = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
             return nil
         }
 
-        let pinYinCachePath = NSString(string: documentsPath).appendingPathComponent("PinYinCache")
+        let pinYinCachePath = appHomePath.appendingPathComponent("vCommander").path
+        
         if !FileManager.default.fileExists(atPath: pinYinCachePath) {
             do {
                 try FileManager.default.createDirectory(atPath: pinYinCachePath, withIntermediateDirectories: true, attributes: nil)
